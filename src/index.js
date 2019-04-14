@@ -5,12 +5,6 @@ import './index.css';
 // components to build:
 // Input Converter
 
-let num = 0;
-
-function calculate(n) {
-    return n * 2;
-}
-
 class UserInput extends React.Component {
     constructor(props) {
         super(props);
@@ -18,11 +12,27 @@ class UserInput extends React.Component {
         this.state = {
             value: ''
         };
+        this.num = 0;
+    }
+
+    calculate(n){
+        let total = 0;
+        
+        for (let i = 0; i < n.length; i++) {
+            if (Number(n[i]) > 1 || Number(n[i]) < 0) {
+                total = null;
+                alert('enter a binary number!')
+            } 
+            total *= 2
+            total += Number(n[i])
+        }
+        // for each iteration, multiply the current total by 2, and add the current binary digit
+        return total;
     }
 
     handleInput(event) {
         this.setState({ value: event.target.value });
-        num = event.target.value;
+        this.num = event.target.value;
     }
 
     render() {
@@ -30,23 +40,19 @@ class UserInput extends React.Component {
             <div>
                 <input type="text" value={this.state.value} onChange={this.handleInput}></input>
                 <div>
-                    <h1>{num > 0 ? num : null}</h1>
-                    <h1>{num > 0 ? calculate(num) : null}</h1>
+                    <h1>{this.num > 0 ? this.num : null}</h1>
+                    <h1>{this.num > 0 ? this.calculate(this.num) : null}</h1>
                 </div>
             </div>
         );
     }
 }
 
-
-
-
 class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>Hello World!</h1>
-
+                <h3>Binary to decimal</h3>
                 <UserInput />
             </div>
         );
